@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aideology Studios — Staff Tracker Pro</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- SheetJS — multi-sheet .xlsx export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <!-- Aideology Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ====================================================
+     HOME PAGE
+     ==================================================== -->
+<div id="home" class="page active">
+  <div class="home-top-line"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+
+  <div class="home-brand">
+    <div class="home-tag">CREATIVE STUDIO</div>
+    <div class="home-logo-main">AIDEOLOGY<span>Studios</span></div>
+    <div class="home-sub">Staff Tracker Pro</div>
+  </div>
+
+  <div class="staff-grid">
+
+    <div class="staff-card" onclick="goToMemberPage('PRASHANTH')">
+      <div class="card-glow"></div>
+      <div class="card-number">01</div>
+      <div class="card-initial">P</div>
+      <div class="card-name">PRASHANTH</div>
+      <div class="card-label">TEAM MEMBER</div>
+      <div class="card-arrow">ENTER →</div>
+    </div>
+
+    <div class="staff-card" onclick="goToMemberPage('CHANDU')">
+      <div class="card-glow"></div>
+      <div class="card-number">02</div>
+      <div class="card-initial">C</div>
+      <div class="card-name">CHANDU</div>
+      <div class="card-label">TEAM MEMBER</div>
+      <div class="card-arrow">ENTER →</div>
+    </div>
+
+    <div class="staff-card" onclick="goToMemberPage('IMMI')">
+      <div class="card-glow"></div>
+      <div class="card-number">03</div>
+      <div class="card-initial">I</div>
+      <div class="card-name">IMMI</div>
+      <div class="card-label">TEAM MEMBER</div>
+      <div class="card-arrow">ENTER →</div>
+    </div>
+
+    <div class="staff-card" onclick="goToMemberPage('SRIRAJ')">
+      <div class="card-glow"></div>
+      <div class="card-number">04</div>
+      <div class="card-initial">S</div>
+      <div class="card-name">SRIRAJ</div>
+      <div class="card-label">TEAM MEMBER</div>
+      <div class="card-arrow">ENTER →</div>
+    </div>
+
+  </div>
+
+  <div class="home-footer">AIDEOLOGY STUDIOS © 2025</div>
+</div>
+
+<!-- ====================================================
+     MEMBER PAGE
+     ==================================================== -->
+<div id="member-page" class="page">
+
+  <!-- Header -->
+  <div class="mp-header">
+    <div class="mp-title-wrap">
+      <button class="mp-back" onclick="goHome()">← BACK TO HOME</button>
+      <div id="mp-name" class="mp-name"></div>
+    </div>
+    <div class="mp-actions">
+      <button class="mp-action-btn" onclick="exportAllToExcel()">⬇ DOWNLOAD EXCEL</button>
+      <button class="mp-action-btn" onclick="syncWithDrive()">☁ SYNC DRIVE</button>
+      <button class="mp-action-btn" onclick="getAIInsights()">✨ AI INSIGHTS</button>
+    </div>
+  </div>
+
+  <!-- Data Entry Form -->
+  <div class="form-section">
+    <div id="form-deco" class="form-deco"></div>
+    <div class="form-title">+ ADD NEW ENTRY</div>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label class="form-label">DATE</label>
+        <input type="date" id="f-date" class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">ATTENDANCE</label>
+        <div class="att-toggle">
+          <button id="att-present" class="att-btn active" onclick="setAtt('Present')">PRESENT</button>
+          <button id="att-absent"  class="att-btn"        onclick="setAtt('Absent')">ABSENT</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">PROJECT NAME</label>
+        <input type="text" id="f-project" class="form-input" placeholder="Enter project name">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">VIDEO TYPE</label>
+        <select id="f-type" class="form-select">
+          <option>Ad Video</option>
+          <option>Brand Video</option>
+          <option>Social Media</option>
+          <option>Corporate</option>
+          <option>Documentary</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">DURATION (HOURS)</label>
+        <input type="number" id="f-duration" class="form-input" placeholder="0" step="0.5">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">STATUS</label>
+        <select id="f-status" class="form-select">
+          <option>Completed</option>
+          <option>In Progress</option>
+          <option>On Hold</option>
+          <option>Pending</option>
+        </select>
+      </div>
+
+      <div class="form-group" style="grid-column: span 2">
+        <label class="form-label">REMARKS / NOTES</label>
+        <textarea id="f-remarks" class="form-textarea" placeholder="Additional notes..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">LINK 1</label>
+        <input type="url" id="f-link"  class="form-input" placeholder="https://">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">LINK 2</label>
+        <input type="url" id="f-link2" class="form-input" placeholder="https://">
+      </div>
+
+    </div><!-- /form-grid -->
+
+    <div class="form-submit-row">
+      <button id="submit-btn"      class="form-submit" onclick="submitEntry()">+ ADD ENTRY</button>
+      <button id="cancel-edit-btn" class="form-cancel" onclick="cancelEdit()">CANCEL</button>
+    </div>
+  </div><!-- /form-section -->
+
+  <!-- Statistics -->
+  <div class="stats-section">
+    <div class="stats-title">📊 STATISTICS</div>
+    <div id="stats-row" class="stats-row"></div>
+  </div>
+
+  <!-- Data Table -->
+  <div class="table-section">
+    <div class="table-header">
+      <div>
+        <div id="sheet-title" class="table-title"></div>
+        <div id="entry-count" class="entry-count"></div>
+      </div>
+    </div>
+
+    <div class="table-actions">
+      <button class="table-action-btn" onclick="clearAllEntries()">🗑 CLEAR ALL</button>
+    </div>
+
+    <div id="empty-state" class="empty-state">
+      <div class="empty-icon">📝</div>
+      <div class="empty-text">NO ENTRIES YET — ADD YOUR FIRST ENTRY ABOVE</div>
+    </div>
+
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>DATE</th>
+            <th>ATTENDANCE</th>
+            <th>PROJECT</th>
+            <th>TYPE</th>
+            <th>DURATION</th>
+            <th>STATUS</th>
+            <th>REMARKS</th>
+            <th>LINK 1</th>
+            <th>LINK 2</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div><!-- /table-section -->
+
+</div><!-- /member-page -->
+
+<!-- ====================================================
+     SETTINGS PANEL
+     ==================================================== -->
+<button class="settings-toggle" onclick="openSettings()">⚙ SETTINGS</button>
+
+<div id="settings-overlay" class="settings-overlay" onclick="closeSettingsOnBg(event)">
+  <div class="settings-box">
+    <div class="settings-title">SETTINGS</div>
+    <div class="settings-subtitle">Configure integrations</div>
+
+    <label class="settings-label">
+      <span class="sync-dot" id="sync-dot-sheet"></span>
+      GOOGLE APPS SCRIPT URL (for Sheets sync)
+    </label>
+    <input type="text" id="settings-sheet-url" class="settings-input"
+           placeholder=https://script.google.com/macros/s/AKfycby5G2gxgC6mYBxsu_wpWs_UcdncHLeNsJnmWKnl80u-REsruQDHD1q2OCfBgVTv5pws-g/exec">
+
+    <label class="settings-label">
+      <span class="sync-dot" id="sync-dot-drive"></span>
+      GOOGLE DRIVE FOLDER ID
+      <span class="ai-badge">EXCEL AUTO-SAVE</span>
+    </label>
+    <input type="text" id="settings-drive-folder" class="settings-input"
+           placeholder="1a2b3c4d5e6f7g8h9i0j...">
+
+    <label class="settings-label">
+      <span class="sync-dot" id="sync-dot-claude"></span>
+      CLAUDE API KEY
+      <span class="ai-badge">AI POWERED</span>
+    </label>
+    <input type="password" id="settings-claude-key" class="settings-input"
+           placeholder="sk-ant-api03-...">
+
+    <div class="settings-actions">
+      <button class="settings-btn"   onclick="saveSettings()">✓ SAVE SETTINGS</button>
+      <button class="settings-close" onclick="closeSettings()">CLOSE</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast"></div>
+
+<!-- Aideology App Script -->
+<script src="js/app.js"></script>
+
+</body>
+</html>
